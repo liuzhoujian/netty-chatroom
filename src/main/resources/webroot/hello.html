@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>登陆页面</title>
+        <link href="/css/bootstrap.css" rel="stylesheet">
+        <link href="/css/signin.css" rel="stylesheet">
+    </head>
+    <body class="text-center">
+        <div id="loginDiv" class="form-signin">
+            <h1 class="h3 mb-3 font-weight-normal">欢迎进入websocket聊天室</h1>
+            <span class="icon-user icon-large"></span>
+            <label class="sr-only">Username</label>
+            <input id="username" type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+            <button class="btn btn-lg btn-primary btn-block" onclick="CHAT.login()">进入</button>
+        </div>
+        <div id="chatDiv" class="form-signin" style="display: none">
+            姓名：<span id="userNameSpan"></span>
+            &nbsp&nbsp&nbsp当前在线人数：<span>*</span>
+            <button id="logout" class="btn-sm btn-success" name="logout" onclick="CHAT.logout()">退出</button>
+            <textarea id="msgArea" rows="20" cols="60"></textarea>
+            我说：<input id="myMsg" type="text" name="content">
+            <button id="send" class="btn-sm btn-success" name="send" onclick="CHAT.send()">发送</button>
+        </div>
+    </body>
+
+    <script src="js/jquery.js"></script>
+    <script src="/js/action.js"></script>
+</html>
+
