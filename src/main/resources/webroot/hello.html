@@ -18,10 +18,10 @@
         <div id="chatDiv" class="form-signin" style="display: none">
             姓名：<span id="userNameSpan"></span>
             &nbsp&nbsp&nbsp当前在线人数：<span>*</span>
-            <button id="logout" class="btn-sm btn-success" name="logout" onclick="CHAT.logout()">退出</button>
+            <button id="logout" class="btn-sm btn-danger" name="logout" onclick="CHAT.logout()">退出</button>
             <textarea id="msgArea" rows="20" cols="60"></textarea>
             我说：<input id="myMsg" type="text" name="content">
-            <button id="send" class="btn-sm btn-success" name="send" onclick="CHAT.send()">发送</button>
+            <button id="send" class="btn-sm btn-success" name="send" onclick="CHAT.sendMsg()">发送</button>
         </div>
     </body>
 

@@ -103,4 +103,6 @@ public class IMMessage {
     public void setContent(String content) {
         this.content = content;
     }
+
+
 }
