@@ -23,9 +23,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<IMMessage> {
         //向服务端发送登录消息
         IMMessage message = new IMMessage();
         message.setCmd(IMP.LOGIN.getName());
-        message.setTime(systTime());
+        message.setTime(System.currentTimeMillis());
         message.setSender(this.nickName);
-        System.out.println("向服务端发送登录消息");
         ctx.channel().writeAndFlush(message);
 
         //开启会话

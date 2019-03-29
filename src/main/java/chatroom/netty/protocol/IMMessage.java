@@ -2,8 +2,10 @@ package chatroom.netty.protocol;
 
 import org.msgpack.annotation.Message;
 
-@Message
-public class IMMessage {
+import java.io.Serializable;
+
+//@Message
+public class IMMessage implements Serializable {
     /*IP地址及端口*/
     private String addr;
 

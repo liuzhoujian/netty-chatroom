@@ -15,7 +15,9 @@ public class SocketHandler extends SimpleChannelInboundHandler<IMMessage> {
 
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, IMMessage msg) throws Exception {
-        System.out.println("SocketHandler:" + msg);
         processor.process(ctx.channel(), msg);
+
+        /*System.out.println(msg);
+        ctx.writeAndFlush(msg);*/
     }
 }

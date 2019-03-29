@@ -1,8 +1,7 @@
 package chatroom.netty.client;
 
 import chatroom.netty.client.handler.ClientHandler;
-import chatroom.netty.protocol.IMDecoder;
-import chatroom.netty.protocol.IMEncoder;
+import chatroom.netty.protocol.MarshallingCodeFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -11,6 +10,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+
+import java.nio.charset.Charset;
 
 public class NettyClient {
     private int port;
@@ -39,8 +41,9 @@ public class NettyClient {
                 protected void initChannel(SocketChannel sc) throws Exception {
                     ChannelPipeline pipeline = sc.pipeline();
                     //自定义handler
-                    pipeline.addLast(new IMDecoder());
-                    pipeline.addLast(new IMEncoder());
+                    sc.pipeline().addLast(MarshallingCodeFactory.buildMarshallingEncoder());
+                    sc.pipeline().addLast(MarshallingCodeFactory.buildMarshallingDecoder());
+                    sc.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
                     pipeline.addLast(clientHandler);
                 }
             });

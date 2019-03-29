@@ -1,10 +1,7 @@
 package chatroom.netty.server;
 
-import chatroom.netty.protocol.IMDecoder;
-import chatroom.netty.protocol.IMEncoder;
 import chatroom.netty.server.handlers.MyHttpHandler;
 import chatroom.netty.server.handlers.MyWebSocketHandler;
-import chatroom.netty.server.handlers.SocketHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -45,14 +42,24 @@ public class NettyServer {
                             //自定义的http处理器(遇到ws的不进行处理，向下面的handler传递)
                             sc.pipeline().addLast(new MyHttpHandler("/ws"));
 
+
                             //-----------------支持WebSocket---------------------------------
                             sc.pipeline().addLast(new WebSocketServerProtocolHandler("/im"));
                             sc.pipeline().addLast(new MyWebSocketHandler());
 
-                            //--------支持自定义协议处理（由于是自定义协议，netty内部没有编解码器，所以要自己实现）------
-                            sc.pipeline().addLast(new IMEncoder());//自定义编码器
+
+
+                            //--------支持自定义协议处理（由于是自定义协议，netty内部没有编解码器，所以要自己实现,messagePack ，有问题）------
+                           /* sc.pipeline().addLast(new IMEncoder());//自定义编码器
                             sc.pipeline().addLast(new IMDecoder());//自定义解码器
                             sc.pipeline().addLast(new SocketHandler());
+
+                              //---------自定义协议，使用marshalling序列化框架
+                            sc.pipeline().addLast(MarshallingCodeFactory.buildMarshallingEncoder());
+                            sc.pipeline().addLast(MarshallingCodeFactory.buildMarshallingDecoder());
+                            sc.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
+                            sc.pipeline().addLast(new SocketHandler());
+                            */
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)
