@@ -104,5 +104,16 @@ public class IMMessage {
         this.content = content;
     }
 
-
+    @Override
+    public String toString() {
+        return "IMMessage{" +
+                "addr='" + addr + '\'' +
+                ", cmd='" + cmd + '\'' +
+                ", time=" + time +
+                ", online=" + online +
+                ", sender='" + sender + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

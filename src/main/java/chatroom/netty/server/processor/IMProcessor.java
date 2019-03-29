@@ -30,6 +30,11 @@ public class IMProcessor {
         onlineUsers.remove(channel);
     }
 
+    //方法重载
+    public void process(Channel client, IMMessage message) {
+        process(client, encoder.encode(message));
+    }
+
     //处理逻辑
     public void process(Channel client, String msg) {
         System.out.println(msg);

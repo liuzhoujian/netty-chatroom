@@ -10,6 +10,7 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
     private IMProcessor processor = new IMProcessor();
 
     protected void messageReceived(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
+        System.out.println(msg);
         //处理业务逻辑
         processor.process(ctx.channel(), msg.text());
     }

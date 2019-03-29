@@ -3,7 +3,9 @@ package chatroom.netty.protocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import org.msgpack.MessagePack;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -12,8 +14,30 @@ import java.util.List;
 public class IMDecoder extends ByteToMessageDecoder {
 
     @Override
-    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        try {
+            final int length = in.readableBytes();
+            final byte[] array = new byte[length];
 
+            //变为一个字符串
+            String content = new String(array, in.readableBytes(), length);
+            System.out.println("IMDecoder:" + content);
+            if(!(null == content || "".equals(content.trim()))) {
+                if(!IMP.isIMP(content)) {
+                    ctx.channel().pipeline().remove(this);
+                    return;
+                }
+            }
+
+            //反序列化的过程
+            in.getBytes(in.readableBytes(), array, 0, length);
+            //首先把字节转为messagePack,之后再把这个msg转为IMMessage
+            out.add(new MessagePack().read(array, IMMessage.class));
+            in.clear();
+        } catch (IOException e) {
+            ctx.pipeline().remove(this); //只有为自定义socket协议时，这个解码器才生效
+            return;
+        }
     }
 
 

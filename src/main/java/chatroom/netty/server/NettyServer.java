@@ -1,7 +1,10 @@
 package chatroom.netty.server;
 
+import chatroom.netty.protocol.IMDecoder;
+import chatroom.netty.protocol.IMEncoder;
 import chatroom.netty.server.handlers.MyHttpHandler;
 import chatroom.netty.server.handlers.MyWebSocketHandler;
+import chatroom.netty.server.handlers.SocketHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -46,7 +49,10 @@ public class NettyServer {
                             sc.pipeline().addLast(new WebSocketServerProtocolHandler("/im"));
                             sc.pipeline().addLast(new MyWebSocketHandler());
 
-
+                            //--------支持自定义协议处理（由于是自定义协议，netty内部没有编解码器，所以要自己实现）------
+                            sc.pipeline().addLast(new IMEncoder());//自定义编码器
+                            sc.pipeline().addLast(new IMDecoder());//自定义解码器
+                            sc.pipeline().addLast(new SocketHandler());
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)
